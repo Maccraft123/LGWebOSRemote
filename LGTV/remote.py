@@ -124,13 +124,13 @@ class LGTVRemote(WebSocketClient):
         logging.debug(response)
         # {"type":"response","id":"0","payload":{"returnValue":true}}
         if response['type'] == "error":
-            print (json.dumps(response))
+            print (json.dumps(response, sort_keys=True, indent=2))
             self.close()
         if "returnValue" in response["payload"] and response["payload"]["returnValue"] is True:
-            print (json.dumps(response))
+            print (json.dumps(response, sort_keys=True, indent=2))
             self.close()
         else:
-            print (json.dumps(response))
+            print (json.dumps(response, sort_keys=True, indent=2))
 
     def __send_command(self, msgtype, uri, payload=None, callback=None, prefix=None):
         if not callback:
@@ -226,8 +226,9 @@ class LGTVRemote(WebSocketClient):
     def inputChannelDown(self, callback=None):
         self.__send_command("request", "ssap://tv/channelDown", None, callback)
 
-    def setTVChannel(self, channel, callback=None):
-        self.__send_command("request", "ssap://tv/openChannel", {"channelId": channel}, callback)
+    def setTVChannel(self, channelNumber, callback=None):
+        print("num: ", channelNumber, "id", os.environ.get("CHAN_ID"), "\n")
+        self.__send_command("request", "ssap://tv/openChannel", {"channelNumber": int(channelNumber), "channelId": os.environ.get("CHAN_ID")}, callback)
 
     def getTVChannel(self, callback=None):
         self.__send_command("request", "ssap://tv/getCurrentChannel", None, callback, "channels")

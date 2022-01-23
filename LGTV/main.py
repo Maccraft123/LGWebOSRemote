@@ -28,8 +28,8 @@ def parseargs(command, argv):
     args = getargspec(LGTVClient.__dict__[command])
     args = args.args[1:-1]
 
-    if len(args) != len(argv):
-        raise Exception("Argument lengths do not match")
+    #if len(args) != len(argv):
+    #    raise Exception("Argument lengths do not match")
 
     output = {}
     for (i, a) in enumerate(args):
@@ -84,11 +84,9 @@ def main():
         ws.run_forever()
     else:
         try:
+            print("dupa")
             ws = LGTVClient()
-            try:
-                args = parseargs(sys.argv[1], sys.argv[2:])
-            except Exception as e:
-                usage(e.message)
+            args = parseargs(sys.argv[1], sys.argv[2], sys.argv[3])
             ws.connect()
             ws.exec_command(sys.argv[1], args)
             ws.run_forever()

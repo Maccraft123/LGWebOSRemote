@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export CHAN_NUM=$1
+export CHAN_ID="$(lgtv mytv listChannels | grep -B7 '"channelType": "Terrestrial Digital TV"' | grep -B6 '"channelNumber": "'$CHAN_NUM'"' | grep 'channelId' | tr '"' ' ' | awk '{print $3}')"
+lgtv mytv setTVChannel $CHAN_NUM

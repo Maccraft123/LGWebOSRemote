@@ -46,8 +46,8 @@ def parseargs(command, argv):
     args = getargspec(LGTVRemote.__dict__[command])
     args = args.args[1:-1]
 
-    if len(args) != len(argv):
-        raise Exception("Argument lengths do not match")
+    #if len(args) != len(argv):
+    #    raise Exception("Argument lengths do not match")
 
     output = {}
     for (i, a) in enumerate(args):
